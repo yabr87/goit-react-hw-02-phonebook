@@ -3,10 +3,10 @@ import s from './ContactList.module.css';
 
 const ContactList = ({ contacts }) => {
   return (
-    <ul className={s.ContactList}>
+    <ul className={s.contactList}>
       {contacts.map(({ id, name, number }) => {
         return (
-          <li key={id} className={s.ContactItem}>
+          <li key={id} className={s.contactItem}>
             {name}: {number}
           </li>
         );

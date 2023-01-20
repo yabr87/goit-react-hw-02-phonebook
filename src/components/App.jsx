@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ContactForm from './ContactForm';
 import ContactList from './ContactList';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 
 class App extends Component {
   state = {
@@ -12,15 +12,39 @@ class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    name: '',
-    number: '',
+  };
+
+  onFormSabmit = e => {
+    e.preventDefault();
+    const userName = e.currentTarget.name.value.toLowerCase();
+    const userTel = e.currentTarget.number.value;
+
+    this.addContacts(userName, userTel);
+    e.currentTarget.reset();
+  };
+
+  addContacts = (userName, userTel) => {
+    this.setState(prevState => {
+      let test = {
+        contacts: [
+          {
+            id: nanoid(4),
+            name: userName,
+            number: userTel,
+          },
+          ...prevState.contacts,
+        ],
+      };
+      console.log(test);
+      return test;
+    });
   };
 
   render() {
     return (
       <div className="AppWrapper">
         <h1>Phonebook</h1>
-        <ContactForm />
+        <ContactForm onFormSabmit={this.onFormSabmit} />
 
         <h2>Contacts</h2>
         {/* <Filter ... /> */}
