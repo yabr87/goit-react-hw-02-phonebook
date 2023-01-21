@@ -8,6 +8,7 @@ const Filter = ({ filterValue, onFilterInputChange }) => {
         Find contacts by name{' '}
       </label>
       <input
+        autoComplete="off"
         id="idFilter"
         className={s.input}
         name="filter"

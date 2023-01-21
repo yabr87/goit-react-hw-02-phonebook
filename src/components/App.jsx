@@ -52,6 +52,16 @@ class App extends Component {
     });
   };
 
+  deleteContacts = e => {
+    const id = e.target.dataset.btnid;
+    if (!id) return;
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(contact => contact.id !== id),
+      };
+    });
+  };
+
   onInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -63,6 +73,7 @@ class App extends Component {
     const fiteredContacts = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizeFilter)
     );
+    console.log(fiteredContacts.sort((a, b) => a.name.localeCompare(b.name)));
     //соротуємо контакти та повертаемо масив фільтррованих контактів з функції
     return fiteredContacts.sort((a, b) => a.name.localeCompare(b.name));
   };
@@ -78,7 +89,10 @@ class App extends Component {
           filterValue={this.state.filter}
           onFilterInputChange={this.onInputChange}
         />
-        <ContactList contacts={this.fiteredContacts()} />
+        <ContactList
+          contacts={this.fiteredContacts()}
+          deleteContacts={this.deleteContacts}
+        />
       </div>
     );
   }

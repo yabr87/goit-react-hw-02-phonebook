@@ -1,7 +1,9 @@
 .btn {
+  height: 21px;
   font-family: inherit;
   background-color: white;
   text-transform: uppercase;
+
   border-radius: 15px;
   border: 1px solid darkgray;
   outline: none;
