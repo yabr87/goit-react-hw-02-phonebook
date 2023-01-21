@@ -15,19 +15,6 @@ class App extends Component {
     filter: '',
   };
 
-  onFormSabmit = e => {
-    e.preventDefault();
-    const userName = e.currentTarget.name.value.toLowerCase();
-    const userTel = e.currentTarget.number.value;
-    if (this.checkNameInPhonebook(userName)) {
-      this.alertError(userName);
-      return;
-    }
-
-    this.addContacts(userName, userTel);
-    e.currentTarget.reset();
-  };
-
   alertError = userName => {
     alert(`${userName} is already in contacts!`);
   };
@@ -38,6 +25,11 @@ class App extends Component {
   };
 
   addContacts = (userName, userTel) => {
+    if (this.checkNameInPhonebook(userName)) {
+      this.alertError(userName);
+      return;
+    }
+
     this.setState(prevState => {
       return {
         contacts: [
@@ -52,9 +44,7 @@ class App extends Component {
     });
   };
 
-  deleteContacts = e => {
-    const id = e.target.dataset.btnid;
-    if (!id) return;
+  deleteContacts = id => {
     this.setState(prevState => {
       return {
         contacts: prevState.contacts.filter(contact => contact.id !== id),
@@ -67,14 +57,10 @@ class App extends Component {
   };
 
   fiteredContacts = () => {
-    // значення фільтру приводимо до нижного регістру та прибираємо пробіли на початку та в кінці
     const normalizeFilter = this.state.filter.toLowerCase().trim();
-    //формуємо новий масив контактів з фультру в стейті
     const fiteredContacts = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizeFilter)
     );
-    console.log(fiteredContacts.sort((a, b) => a.name.localeCompare(b.name)));
-    //соротуємо контакти та повертаемо масив фільтррованих контактів з функції
     return fiteredContacts.sort((a, b) => a.name.localeCompare(b.name));
   };
 
@@ -82,7 +68,7 @@ class App extends Component {
     return (
       <div className="AppWrapper">
         <h1>Phonebook</h1>
-        <ContactForm onFormSabmit={this.onFormSabmit} />
+        <ContactForm onFormSabmit={this.addContacts} />
 
         <h2>Contacts</h2>
         <Filter
