@@ -68,7 +68,7 @@ class App extends Component {
     return (
       <div className="AppWrapper">
         <h1>Phonebook</h1>
-        <ContactForm onFormSabmit={this.addContacts} />
+        <ContactForm addContacts={this.addContacts} />
 
         <h2>Contacts</h2>
         <Filter
